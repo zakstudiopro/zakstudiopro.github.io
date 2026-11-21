@@ -623,7 +623,7 @@ body {
 </style>
 </head>
 <body>
-<div class="zs-bgfixed" aria-hidden="true"><div class="zs-bglayer zs-bg-0 is-on"></div><div class="zs-bglayer zs-bg-1"></div><div class="zs-bglayer zs-bg-2"></div></div>
+<div class="zs-bgfixed" aria-hidden="true"><div class="zs-bglayer zs-bg-0 is-on"></div><div class="zs-bglayer zs-bg-0"></div><div class="zs-bglayer zs-bg-1"></div><div class="zs-bglayer zs-bg-2"></div></div>
 <div class="zs-page">
 <header class="zs-hero">
 <img class="zs-logo" src="https://zakstudiopro.github.io/logo.png" alt="Zak Studio logo">
@@ -907,7 +907,8 @@ if (location.hash === '#ar') zsTab('ar');
       var h = sh.querySelector('h2');
       if (!h) return;
       var t = h.textContent.trim();
-      var l = (t === 'Ads') ? 1 : (t === 'Selected work' ? 0 : 2);
+      var l = (t === 'About') ? 1 : (t === 'Ads') ? 2 : (t === 'Narration & Explainers') ? 3 : (t === 'Selected work' ? 0 : null);
+      if (l === null) return;
       m.push({ top: sh.getBoundingClientRect().top + window.scrollY, layer: l });
     });
     m.sort(function (a, b) { return a.top - b.top; });
@@ -921,8 +922,10 @@ if (location.hash === '#ar') zsTab('ar');
   }
   window.addEventListener('scroll', update, { passive: true });
   window.addEventListener('resize', update);
+  window.addEventListener('load', update);
   document.addEventListener('click', function () { setTimeout(update, 50); });
   update();
+  setTimeout(update, 400);
 })();
 </script>
 </body>
