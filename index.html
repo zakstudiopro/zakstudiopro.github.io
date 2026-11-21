@@ -315,6 +315,14 @@ body { background: #06070c; }
 .zs-tab.is-active .zs-tab-mid,
 .zs-tab.is-active em { color: #101016; }
 
+@keyframes zsTabPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255, 122, 26, 0.45); }
+    50% { box-shadow: 0 0 0 7px rgba(255, 122, 26, 0); }
+}
+@media (prefers-reduced-motion: no-preference) {
+    .zs-tab:not(.is-active) { animation: zsTabPulse 2.4s ease-in-out infinite; }
+}
+
 /* Work grid + cards */
 
 .zs-grid {
@@ -900,8 +908,12 @@ if (location.hash === '#ar') zsTab('ar');
 (function () {
   var layers = [].slice.call(document.querySelectorAll('.zs-bglayer'));
   if (!layers.length) return;
+  function zsLangOffset() {
+    var ar = document.getElementById('zs-panel-ar');
+    return (ar && !ar.hidden) ? 1 : 0;
+  }
   function currentMarks() {
-    var m = [{ top: 0, layer: 0 }];
+    var m = [{ top: 0, layer: zsLangOffset() % layers.length }];
     [].forEach.call(document.querySelectorAll('.zs-page .zs-sechead'), function (sh) {
       if (sh.offsetParent === null) return;
       var h = sh.querySelector('h2');
@@ -909,7 +921,7 @@ if (location.hash === '#ar') zsTab('ar');
       var t = h.textContent.trim();
       var l = (t === 'About') ? 1 : (t === 'Ads') ? 2 : (t === 'Narration & Explainers') ? 3 : (t === 'Selected work' ? 0 : null);
       if (l === null) return;
-      m.push({ top: sh.getBoundingClientRect().top + window.scrollY, layer: l });
+      m.push({ top: sh.getBoundingClientRect().top + window.scrollY, layer: (l + zsLangOffset()) % layers.length });
     });
     m.sort(function (a, b) { return a.top - b.top; });
     return m;
