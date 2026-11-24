@@ -956,7 +956,7 @@ if (location.hash === '#ar') zsTab('ar');
       m.push({ top: sh.getBoundingClientRect().top + window.scrollY, layer: (l + zsLangOffset()) % layers.length });
     });
     var f = document.querySelector('.zs-page .zs-footer');
-    if (f) m.push({ top: f.getBoundingClientRect().top + window.scrollY, layer: (4 + zsLangOffset()) % layers.length });
+    if (f) m.push({ top: f.getBoundingClientRect().top + window.scrollY - window.innerHeight * 0.7, layer: (4 + zsLangOffset()) % layers.length });
     m.sort(function (a, b) { return a.top - b.top; });
     return m;
   }
