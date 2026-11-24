@@ -648,10 +648,10 @@ body {
 }
 @keyframes zsBgDrift {
     from { transform: scale(1) translate3d(0, 0, 0); }
-    to { transform: scale(1.12) translate3d(0, -2%, 0); }
+    to { transform: scale(1.17) translate3d(0, -3.5%, 0); }
 }
 @media (prefers-reduced-motion: no-preference) {
-    .zs-bglayer.zs-motion.is-on { animation: zsBgDrift 22s ease-in-out infinite alternate; will-change: transform; }
+    .zs-bglayer.zs-motion.is-on { animation: zsBgDrift 13s ease-in-out infinite alternate; will-change: transform; }
     .zs-rise { opacity: 0; transform: translateY(24px); transition: opacity 0.8s cubic-bezier(0.2, 0.6, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.6, 0.2, 1); }
     .zs-card.zs-rise { transition: opacity 0.8s cubic-bezier(0.2, 0.6, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.6, 0.2, 1), border-color 0.15s ease; }
     .zs-rise.zs-in { opacity: 1; transform: none; }
