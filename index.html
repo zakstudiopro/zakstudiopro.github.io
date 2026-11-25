@@ -663,21 +663,41 @@ body {
 <noscript><style>.zs-rise { opacity: 1 !important; transform: none !important; }</style></noscript>
 <style>
 /* Success partners: 3D depth ring (Nov 25) */
-.zs-success{margin:34px 0 8px}
+.zs-success{margin:16px 0 8px}
 .zs-pill{display:flex;align-items:center;gap:10px;padding:9px 18px 9px 11px;border-radius:999px;background:rgba(13,15,22,.55);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);white-space:nowrap;box-shadow:0 6px 20px rgba(0,0,0,.3)}
 .zs-pill img{width:28px;height:28px;object-fit:contain;border-radius:7px;background:#fff;padding:2px;display:block}
 .zs-pill b{font-weight:600;font-size:13.5px;letter-spacing:.01em;color:#fff}
-.zs-ring{position:relative;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.zs-ring{position:relative;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 16%,#000 84%,transparent);mask-image:linear-gradient(90deg,transparent,#000 16%,#000 84%,transparent)}
 .zs-ring-stage{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:14px 18px;padding:8px 0}
 .zs-ring::before{content:"";position:absolute;inset:0;background:radial-gradient(58% 60% at 50% 64%,rgba(255,122,26,.10),rgba(255,122,26,0) 72%);pointer-events:none;opacity:0;transition:opacity .6s ease}
-.zs-ring.zs-3d{height:240px;perspective:1200px;-webkit-perspective:1200px;touch-action:pan-y;cursor:grab}
+.zs-ring.zs-3d{height:220px;perspective:1200px;-webkit-perspective:1200px;touch-action:pan-y;cursor:grab}
 .zs-ring.zs-3d:active{cursor:grabbing}
 .zs-ring.zs-3d::before{opacity:1}
-.zs-ring.zs-3d .zs-ring-stage{position:absolute;inset:0;display:block;gap:0;padding:0;transform-style:preserve-3d;-webkit-transform-style:preserve-3d;transform:translateY(-14px) rotateX(-6deg)}
+.zs-ring.zs-3d .zs-ring-stage{position:absolute;inset:0;display:block;gap:0;padding:0;transform-style:preserve-3d;-webkit-transform-style:preserve-3d;transform:rotateX(-5deg)}
 .zs-ring.zs-3d .zs-pill{position:absolute;top:50%;left:50%;margin:0;will-change:transform,opacity;backface-visibility:hidden;-webkit-backface-visibility:hidden;user-select:none;-webkit-user-select:none}
-@media (max-width:560px){.zs-ring.zs-3d{height:170px}.zs-ring.zs-3d .zs-pill b{font-size:11px}.zs-ring.zs-3d .zs-pill{padding:5px 11px 5px 7px;gap:7px}.zs-ring.zs-3d .zs-pill img{width:20px;height:20px;border-radius:5px}}
+@media (max-width:560px){.zs-ring.zs-3d{height:180px}.zs-ring{-webkit-mask-image:linear-gradient(90deg,transparent,#000 22%,#000 78%,transparent);mask-image:linear-gradient(90deg,transparent,#000 22%,#000 78%,transparent)}.zs-ring.zs-3d .zs-pill b{font-size:9.5px}.zs-ring.zs-3d .zs-pill{padding:4px 8px 4px 5px;gap:5px}.zs-ring.zs-3d .zs-pill img{width:16px;height:16px;border-radius:4px}}
 </style>
 <style>.zs-sp-head{justify-content:center;text-align:center}.zs-sp-head h2[hidden]{display:none}</style>
+<style>
+/* Mobile first-view compaction (Nov 25): AR/EN options visible on first screen */
+@media (max-width:560px){
+.zs-page{padding:18px 20px 28px}
+.zs-logo{margin:10px auto 4px;width:104px}
+.zs-studioname{margin:5px auto 0}
+.zs-tagline-arc{margin:5px auto 0 !important;max-width:78% !important}
+.zs-subline{margin:5px auto 0;font-size:12.5px}
+.zs-about{margin-top:18px}
+.zs-about .zs-sechead{margin:8px auto 0}
+.zs-sechead{margin:18px 0 10px;padding-bottom:6px}
+.zs-bio{margin:8px auto 0;font-size:13.8px;line-height:1.58}
+.zs-demo{margin-top:10px;gap:6px}
+.zs-demo video{width:84%;margin:4px auto 0}
+.zs-success{margin:12px 0 6px}
+.zs-ring.zs-3d{height:132px}
+.zs-tabs{margin:10px 0 6px;gap:10px}
+.zs-tab{min-height:48px;padding:8px 14px}
+}
+</style>
 </head>
 <body>
 <div class="zs-bgfixed" aria-hidden="true"><div class="zs-bglayer zs-bg-0 is-on"></div><div class="zs-bglayer zs-bg-0"></div><div class="zs-bglayer zs-bg-1 zs-motion"></div><div class="zs-bglayer zs-bg-2 zs-motion"></div><div class="zs-bglayer zs-bg-3 zs-motion"></div><div class="zs-bglayer zs-bg-4 zs-motion"></div></div>
@@ -1055,16 +1075,18 @@ if (location.hash === '#ar') zsTab('ar');
   if (!ring) return;
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   var stage = ring.querySelector('.zs-ring-stage');
+  var orig = [].slice.call(stage.children);
+  if (!orig.length) return;
+  orig.forEach(function (it) { stage.appendChild(it.cloneNode(true)); });
   var items = [].slice.call(stage.children);
   var n = items.length;
-  if (!n) return;
   ring.classList.add('zs-3d');
   var step = 360 / n;
   var angle = 0, speed = 0, base = 0.10, vel = 0;
   var hover = false, dragging = false, lastX = 0;
   function radius() {
     var w = ring.clientWidth || 320;
-    return Math.max(170, Math.min(w * 0.58, 380));
+    return Math.max(240, Math.min(w * 0.85, 460));
   }
   function render() {
     var R = radius();
@@ -1076,7 +1098,7 @@ if (location.hash === '#ar') zsTab('ar');
       var s = 0.62 + 0.38 * d;
       var it = items[i];
       it.style.transform = 'translate(-50%,-50%) translate3d(' + x.toFixed(1) + 'px,0,' + z.toFixed(1) + 'px) scale(' + s.toFixed(3) + ')';
-      it.style.opacity = (0.12 + 0.88 * d).toFixed(3);
+      it.style.opacity = (0.2 + 0.8 * d).toFixed(3);
       it.style.filter = d < 0.7 ? 'blur(' + ((0.7 - d) * 3.2).toFixed(1) + 'px)' : 'none';
       it.style.zIndex = Math.round(d * 100);
     }
