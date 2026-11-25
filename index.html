@@ -662,23 +662,20 @@ body {
 </style>
 <noscript><style>.zs-rise { opacity: 1 !important; transform: none !important; }</style></noscript>
 <style>
-/* Success partners strip */
+/* Success partners: 3D depth ring (Nov 25) */
 .zs-success{margin:34px 0 8px}
-.zs-mqwrap{display:flex;flex-direction:column;gap:14px;overflow:hidden;padding:6px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent)}
-.zs-mq{overflow:hidden;direction:ltr}
-.zs-mq-track{display:flex;gap:14px;width:max-content}
-.zs-pill{display:flex;align-items:center;gap:10px;padding:10px 20px 10px 12px;border-radius:999px;background:rgba(13,15,22,.55);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);white-space:nowrap;box-shadow:0 6px 20px rgba(0,0,0,.3)}
-.zs-pill img{width:30px;height:30px;object-fit:contain;border-radius:8px;background:#fff;padding:2px;display:block}
-.zs-pill b{font-weight:600;font-size:14px;letter-spacing:.01em;color:#fff}
-@keyframes zsMqL{to{transform:translateX(-50%)}}
-@keyframes zsMqR{from{transform:translateX(-50%)}to{transform:translateX(0)}}
-@media (prefers-reduced-motion:no-preference){
-.zs-mq-l .zs-mq-track{animation:zsMqL 34s linear infinite}
-.zs-mq-r .zs-mq-track{animation:zsMqR 40s linear infinite}
-.zs-mqwrap:hover .zs-mq-track{animation-play-state:paused}
-}
-@media (prefers-reduced-motion:reduce){.zs-mq-track{flex-wrap:wrap;width:auto;justify-content:center}.zs-mq-track .zs-pill:nth-child(n+9){display:none}}
-@media (max-width:560px){.zs-pill b{font-size:12.5px}.zs-pill{padding:8px 16px 8px 10px}}
+.zs-pill{display:flex;align-items:center;gap:10px;padding:9px 18px 9px 11px;border-radius:999px;background:rgba(13,15,22,.55);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);white-space:nowrap;box-shadow:0 6px 20px rgba(0,0,0,.3)}
+.zs-pill img{width:28px;height:28px;object-fit:contain;border-radius:7px;background:#fff;padding:2px;display:block}
+.zs-pill b{font-weight:600;font-size:13.5px;letter-spacing:.01em;color:#fff}
+.zs-ring{position:relative;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.zs-ring-stage{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:14px 18px;padding:8px 0}
+.zs-ring::before{content:"";position:absolute;inset:0;background:radial-gradient(58% 60% at 50% 64%,rgba(255,122,26,.10),rgba(255,122,26,0) 72%);pointer-events:none;opacity:0;transition:opacity .6s ease}
+.zs-ring.zs-3d{height:240px;perspective:1200px;-webkit-perspective:1200px;touch-action:pan-y;cursor:grab}
+.zs-ring.zs-3d:active{cursor:grabbing}
+.zs-ring.zs-3d::before{opacity:1}
+.zs-ring.zs-3d .zs-ring-stage{position:absolute;inset:0;display:block;gap:0;padding:0;transform-style:preserve-3d;-webkit-transform-style:preserve-3d;transform:translateY(-14px) rotateX(-6deg)}
+.zs-ring.zs-3d .zs-pill{position:absolute;top:50%;left:50%;margin:0;will-change:transform,opacity;backface-visibility:hidden;-webkit-backface-visibility:hidden;user-select:none;-webkit-user-select:none}
+@media (max-width:560px){.zs-ring.zs-3d{height:170px}.zs-ring.zs-3d .zs-pill b{font-size:11px}.zs-ring.zs-3d .zs-pill{padding:5px 11px 5px 7px;gap:7px}.zs-ring.zs-3d .zs-pill img{width:20px;height:20px;border-radius:5px}}
 </style>
 <style>.zs-sp-head{justify-content:center;text-align:center}.zs-sp-head h2[hidden]{display:none}</style>
 </head>
@@ -707,7 +704,7 @@ body {
 
 <section class="zs-success" aria-label="Success partners">
 <div class="zs-sechead zs-sp-head"><h2 id="zs-sp-en">Success Partners</h2><h2 id="zs-sp-ar" dir="rtl" hidden>شركاء النجاح</h2></div>
-<div class="zs-mqwrap"><div class="zs-mq zs-mq-l"><div class="zs-mq-track"><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/hanimex.png" alt="" width="30" height="30" loading="lazy"><b>HANIMEX</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/mars.png" alt="" width="30" height="30" loading="lazy"><b>Mars</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/fawry.png" alt="" width="30" height="30" loading="lazy"><b>Fawry</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/bosta.png" alt="" width="30" height="30" loading="lazy"><b>Bosta</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/wafferha.png" alt="" width="30" height="30" loading="lazy"><b>Wafferha</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/hayati.png" alt="" width="30" height="30" loading="lazy"><b>Ahmed Nada</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/se.png" alt="" width="30" height="30" loading="lazy"><b>Schneider Electric</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/odoo.png" alt="" width="30" height="30" loading="lazy"><b>Odoo</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/hanimex.png" alt="" width="30" height="30" loading="lazy"><b>HANIMEX</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/mars.png" alt="" width="30" height="30" loading="lazy"><b>Mars</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/fawry.png" alt="" width="30" height="30" loading="lazy"><b>Fawry</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/bosta.png" alt="" width="30" height="30" loading="lazy"><b>Bosta</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/wafferha.png" alt="" width="30" height="30" loading="lazy"><b>Wafferha</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/hayati.png" alt="" width="30" height="30" loading="lazy"><b>Ahmed Nada</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/se.png" alt="" width="30" height="30" loading="lazy"><b>Schneider Electric</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/odoo.png" alt="" width="30" height="30" loading="lazy"><b>Odoo</b></span></div></div><div class="zs-mq zs-mq-r"><div class="zs-mq-track"><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/metlife.png" alt="" width="30" height="30" loading="lazy"><b>MetLife</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/pschola.png" alt="" width="30" height="30" loading="lazy"><b>PSchola</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/ariston.png" alt="" width="30" height="30" loading="lazy"><b>Ariston</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/aroma.png" alt="" width="30" height="30" loading="lazy"><b>AROMA</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/arica.png" alt="" width="30" height="30" loading="lazy"><b>ariika</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/farmfrites.png" alt="" width="30" height="30" loading="lazy"><b>Farm Frites</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/sawaparking.png" alt="" width="30" height="30" loading="lazy"><b>Sawa Parking</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/metlife.png" alt="" width="30" height="30" loading="lazy"><b>MetLife</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/pschola.png" alt="" width="30" height="30" loading="lazy"><b>PSchola</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/ariston.png" alt="" width="30" height="30" loading="lazy"><b>Ariston</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/aroma.png" alt="" width="30" height="30" loading="lazy"><b>AROMA</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/arica.png" alt="" width="30" height="30" loading="lazy"><b>ariika</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/farmfrites.png" alt="" width="30" height="30" loading="lazy"><b>Farm Frites</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/sawaparking.png" alt="" width="30" height="30" loading="lazy"><b>Sawa Parking</b></span></div></div></div>
+<div class="zs-ring" aria-label="Success partners logos"><div class="zs-ring-stage"><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/hanimex.png" alt="" width="28" height="28" loading="lazy"><b>HANIMEX</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/mars.png" alt="" width="28" height="28" loading="lazy"><b>Mars</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/fawry.png" alt="" width="28" height="28" loading="lazy"><b>Fawry</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/bosta.png" alt="" width="28" height="28" loading="lazy"><b>Bosta</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/wafferha.png" alt="" width="28" height="28" loading="lazy"><b>Wafferha</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/hayati.png" alt="" width="28" height="28" loading="lazy"><b>Ahmed Nada</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/se.png" alt="" width="28" height="28" loading="lazy"><b>Schneider Electric</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/odoo.png" alt="" width="28" height="28" loading="lazy"><b>Odoo</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/metlife.png" alt="" width="28" height="28" loading="lazy"><b>MetLife</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/pschola.png" alt="" width="28" height="28" loading="lazy"><b>PSchola</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/ariston.png" alt="" width="28" height="28" loading="lazy"><b>Ariston</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/aroma.png" alt="" width="28" height="28" loading="lazy"><b>AROMA</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/arica.png" alt="" width="28" height="28" loading="lazy"><b>ariika</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/farmfrites.png" alt="" width="28" height="28" loading="lazy"><b>Farm Frites</b></span><span class="zs-pill"><img src="https://zakstudiopro.github.io/logos/sawaparking.png" alt="" width="28" height="28" loading="lazy"><b>Sawa Parking</b></span></div></div>
 </section>
 <div class="zs-tabs" role="tablist" aria-label="Works by language">
 <button type="button" role="tab" id="zs-tab-ar" class="zs-tab" aria-selected="false" onclick="zsTab('ar')"><span class="zs-tab-en"><em>Arabic</em> Projects</span><span class="zs-tab-ar" dir="rtl">مشاريع بالعربي</span></button>
@@ -1048,6 +1045,66 @@ if (location.hash === '#ar') zsTab('ar');
   var orig=window.zsTab;
   window.zsTab=function(l){orig(l);sync();};
   sync();
+})();
+</script>
+
+<script>
+/* Success partners 3D ring (Nov 25): depth carousel with drag, hover/touch pause, eased auto-rotation */
+(function () {
+  var ring = document.querySelector('.zs-ring');
+  if (!ring) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var stage = ring.querySelector('.zs-ring-stage');
+  var items = [].slice.call(stage.children);
+  var n = items.length;
+  if (!n) return;
+  ring.classList.add('zs-3d');
+  var step = 360 / n;
+  var angle = 0, speed = 0, base = 0.10, vel = 0;
+  var hover = false, dragging = false, lastX = 0;
+  function radius() {
+    var w = ring.clientWidth || 320;
+    return Math.max(170, Math.min(w * 0.58, 380));
+  }
+  function render() {
+    var R = radius();
+    for (var i = 0; i < n; i++) {
+      var a = (angle + i * step) * Math.PI / 180;
+      var x = Math.sin(a) * R;
+      var z = Math.cos(a) * R;
+      var d = (z + R) / (2 * R); /* 0 back, 1 front */
+      var s = 0.62 + 0.38 * d;
+      var it = items[i];
+      it.style.transform = 'translate(-50%,-50%) translate3d(' + x.toFixed(1) + 'px,0,' + z.toFixed(1) + 'px) scale(' + s.toFixed(3) + ')';
+      it.style.opacity = (0.12 + 0.88 * d).toFixed(3);
+      it.style.filter = d < 0.7 ? 'blur(' + ((0.7 - d) * 3.2).toFixed(1) + 'px)' : 'none';
+      it.style.zIndex = Math.round(d * 100);
+    }
+  }
+  function frame() {
+    var target = (hover || dragging) ? 0 : base;
+    speed += (target - speed) * 0.06;
+    if (!dragging) { angle += speed + vel; vel *= 0.94; }
+    render();
+    requestAnimationFrame(frame);
+  }
+  ring.addEventListener('pointerenter', function () { hover = true; });
+  ring.addEventListener('pointerleave', function () { hover = false; });
+  ring.addEventListener('pointerdown', function (e) {
+    dragging = true; lastX = e.clientX; vel = 0;
+    if (ring.setPointerCapture) { try { ring.setPointerCapture(e.pointerId); } catch (err) {} }
+  });
+  ring.addEventListener('pointermove', function (e) {
+    if (!dragging) return;
+    var dx = e.clientX - lastX; lastX = e.clientX;
+    angle += dx * 0.28; vel = dx * 0.28;
+  });
+  ['pointerup', 'pointercancel'].forEach(function (ev) {
+    ring.addEventListener(ev, function () { dragging = false; });
+  });
+  window.addEventListener('resize', render);
+  render();
+  requestAnimationFrame(frame);
 })();
 </script>
 </body>
