@@ -1245,6 +1245,24 @@ if (location.hash === '#ar') zsTab('ar');
     else { box.style.height=Math.min(Math.round(window.innerHeight*0.76),640)+'px'; }
     return true;
   }
+  /* one video at a time: a tap inside an embed gives that iframe focus; stop the previous one by reloading it */
+  var cur=null;
+  function stopBox(b){
+    var f=b&&b.querySelector('iframe'); if(!f) return;
+    var s=f.getAttribute('src'); b.setAttribute('data-stops',(+b.getAttribute('data-stops')||0)+1);
+    f.src='about:blank'; setTimeout(function(){f.src=s;},120);
+  }
+  setInterval(function(){
+    var ae=document.activeElement;
+    if(ae&&ae.tagName==='IFRAME'&&ae.parentNode&&ae.parentNode.classList&&ae.parentNode.classList.contains('zs-embedbox')){
+      var b=ae.parentNode;
+      if(b!==cur){ if(cur) stopBox(cur); cur=b; }
+    }
+  },250);
+  if('IntersectionObserver' in window){
+    var away=new IntersectionObserver(function(es){es.forEach(function(en){ if(!en.isIntersecting&&en.target===cur){ stopBox(cur); cur=null; } });},{threshold:0});
+    new MutationObserver(function(){boxes.forEach(function(b){ if(!b._obs){b._obs=1;away.observe(b);} });}).observe(document.body,{childList:true,subtree:true});
+  }
   var wraps=[].slice.call(document.querySelectorAll('.zs-comm .zs-thumbwrap'));
   if('IntersectionObserver' in window){
     var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){io.unobserve(en.target);mount(en.target);}});},{rootMargin:'350px 0px'});
