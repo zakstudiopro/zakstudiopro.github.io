@@ -1245,7 +1245,7 @@ if (location.hash === '#ar') zsTab('ar');
     f.style.background='transparent'; f.style.opacity='0'; f.style.transition='opacity .35s ease'; var pb=document.createElement('div'); pb.setAttribute('aria-hidden','true'); pb.style.cssText='position:absolute;left:50%;top:50%;width:68px;height:68px;margin:-34px 0 0 -34px;border-radius:50%;background:rgba(0,0,0,.5);border:2px solid rgba(255,255,255,.9);pointer-events:none;z-index:4;transition:opacity .25s ease'; pb.innerHTML='<svg viewBox="0 0 24 24" width="68" height="68"><path d="M9.5 7.5v9l7.5-4.5z" fill="#fff"/></svg>'; box._pb=pb;
     f.addEventListener('load',function(){ if(f.getAttribute('src')==='about:blank') return; f.style.opacity='1'; pb.style.opacity='0'; });
     wrap._orig=wrap.innerHTML; wrap.classList.add('zs-playing');
-    f.setAttribute('allow','autoplay; encrypted-media; picture-in-picture; fullscreen'); f.setAttribute('allowfullscreen',''); f.title='Video';
+    f.setAttribute('sandbox','allow-scripts allow-same-origin allow-presentation'); f.setAttribute('referrerpolicy','strict-origin-when-cross-origin'); f.setAttribute('allow','autoplay; encrypted-media; picture-in-picture; fullscreen'); f.setAttribute('allowfullscreen',''); f.title='Video';
     box.appendChild(f); box.appendChild(pb); wrap.innerHTML=''; wrap.appendChild(box); boxes.push(box);
     var w0=box.clientWidth||wrap.clientWidth;
     if(box._crop){ f.style.top=(-(54+(w0*1-w0*box._crop[1])/2))+'px'; }
