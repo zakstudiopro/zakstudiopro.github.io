@@ -702,7 +702,7 @@ body {
 .zs-sp-head h2{font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#9b9ca6}
 @media (max-width:560px){.zs-sp-head{display:none}.zs-success{margin:6px 0 4px}}
 </style>
-</head>
+<link rel="preconnect" href="https://www.facebook.com"><link rel="preconnect" href="https://www.instagram.com"><link rel="dns-prefetch" href="https://static.xx.fbcdn.net"></head>
 <body>
 <div class="zs-bgfixed" aria-hidden="true"><div class="zs-bglayer zs-bg-0 is-on"></div><div class="zs-bglayer zs-bg-0"></div><div class="zs-bglayer zs-bg-1 zs-motion"></div><div class="zs-bglayer zs-bg-2 zs-motion"></div><div class="zs-bglayer zs-bg-3 zs-motion"></div><div class="zs-bglayer zs-bg-4 zs-motion"></div></div>
 <div class="zs-page">
@@ -1242,10 +1242,11 @@ if (location.hash === '#ar') zsTab('ar');
       f.setAttribute('scrolling','no');
     } else return false;
     var th0=wrap.querySelector('img.zs-thumb'); if(th0&&th0.src){ box.style.backgroundImage='url("'+th0.src+'")'; box.style.backgroundSize='cover'; box.style.backgroundPosition='center'; }
-    f.style.background='transparent'; f.style.opacity='0'; f.style.transition='opacity .35s ease'; f.addEventListener('load',function(){ f.style.opacity='1'; });
+    f.style.background='transparent'; f.style.opacity='0'; f.style.transition='opacity .35s ease'; var pb=document.createElement('div'); pb.setAttribute('aria-hidden','true'); pb.style.cssText='position:absolute;left:50%;top:50%;width:68px;height:68px;margin:-34px 0 0 -34px;border-radius:50%;background:rgba(0,0,0,.5);border:2px solid rgba(255,255,255,.9);pointer-events:none;z-index:4;transition:opacity .25s ease'; pb.innerHTML='<svg viewBox="0 0 24 24" width="68" height="68"><path d="M9.5 7.5v9l7.5-4.5z" fill="#fff"/></svg>'; box._pb=pb;
+    f.addEventListener('load',function(){ if(f.getAttribute('src')==='about:blank') return; f.style.opacity='1'; pb.style.opacity='0'; });
     wrap._orig=wrap.innerHTML; wrap.classList.add('zs-playing');
     f.setAttribute('allow','autoplay; encrypted-media; picture-in-picture; fullscreen'); f.setAttribute('allowfullscreen',''); f.title='Video';
-    box.appendChild(f); wrap.innerHTML=''; wrap.appendChild(box); boxes.push(box);
+    box.appendChild(f); box.appendChild(pb); wrap.innerHTML=''; wrap.appendChild(box); boxes.push(box);
     var w0=box.clientWidth||wrap.clientWidth;
     if(box._crop){ f.style.top=(-(54+(w0*1-w0*box._crop[1])/2))+'px'; }
     if(id){ box.style.height=Math.round(w0*Math.min(box._ratio,box._ratio>1?0.93:box._ratio))+'px'; }
@@ -1260,7 +1261,7 @@ if (location.hash === '#ar') zsTab('ar');
   function stopBox(b){
     var f=b&&b.querySelector('iframe'); if(!f) return;
     var s=f.getAttribute('src'); b.setAttribute('data-stops',(+b.getAttribute('data-stops')||0)+1);
-    f.src='about:blank'; setTimeout(function(){f.src=s;},120);
+    if(b._pb) b._pb.style.opacity='1'; f.src='about:blank'; setTimeout(function(){f.src=s;},120);
   }
   setInterval(function(){
     var ae=document.activeElement;
@@ -1275,7 +1276,7 @@ if (location.hash === '#ar') zsTab('ar');
   }
   var wraps=[].slice.call(document.querySelectorAll('.zs-comm .zs-thumbwrap'));
   if('IntersectionObserver' in window){
-    var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){io.unobserve(en.target);mount(en.target);}});},{rootMargin:'350px 0px'});
+    var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){io.unobserve(en.target);mount(en.target);}});},{rootMargin:'900px 0px'});
     wraps.forEach(function(w){io.observe(w);});
   }
   document.addEventListener('click',function(e){
