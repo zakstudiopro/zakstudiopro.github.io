@@ -1200,31 +1200,52 @@ if (location.hash === '#ar') zsTab('ar');
 </style>
 
 <style>
-/* Inline playback in commercials (Nov 28) */
-.zs-grid.zs-comm .zs-thumbwrap.zs-playing{aspect-ratio:auto;height:min(76vh,680px);background:#000;display:flex;justify-content:center}
+/* Inline playback in commercials, video window only (Nov 28) */
+.zs-grid.zs-comm .zs-thumbwrap.zs-playing{aspect-ratio:auto;background:#000;display:block;overflow:hidden}
 .zs-grid.zs-comm .zs-thumbwrap.zs-playing::before{display:none}
-.zs-grid.zs-comm .zs-thumbwrap.zs-playing iframe{border:0;width:100%;max-width:420px;height:100%;background:#000;display:block}
 .zs-grid.zs-comm .zs-thumbwrap.zs-playing .zs-badge{display:none}
 .zs-grid.zs-comm .zs-thumbwrap:not(.zs-playing){cursor:pointer}
+.zs-embedbox{position:relative;margin:0 auto;width:100%;max-width:480px;overflow:hidden;background:#000;transition:height .25s ease}
+.zs-embedbox iframe{position:absolute;left:0;border:0;width:100%;background:#000;display:block}
+.zs-embedbox.zs-ig iframe{top:-54px}
+.zs-embedbox.zs-fb iframe{top:0;height:100%}
 </style>
 <script>
 (function(){
-  function embedUrl(href){
-    var m=href.match(/instagram\.com\/(?:[^\/]+\/)?reel\/([^\/?#]+)/);
-    if(m) return 'https://www.instagram.com/reel/'+m[1]+'/embed/';
-    if(/facebook\.com\/reel\//.test(href)) return 'https://www.facebook.com/plugins/video.php?href='+encodeURIComponent(href)+'&show_text=false&autoplay=true&width=420';
-    return null;
-  }
+  var IGR={DJHWj2TN3BQ:1.25,DJJxirhNwAm:0.5625,DJj5vxdt1I2:0.5625,DR8QenGDd4p:1,DTqd1r1DSDQ:0.5625,DYNH4TfNy:1,DZpg5oJtBTg:1.25,DZqSMrCzXY4:0.5625,Dfrfv4htGsg:1.25};
+  function igId(href){var m=href.match(/instagram\.com\/(?:[^\/]+\/)?reel\/([^\/?#]+)/);return m?m[1]:null;}
+  function ratioFor(id){for(var k in IGR){if(id.indexOf(k)===0||k.indexOf(id)===0)return IGR[k];}return 9;}
+  var boxes=[];
+  window.addEventListener('message',function(e){
+    if(!/instagram\.com$/.test(e.origin)) return;
+    var d=e.data; if(typeof d==='string'){try{d=JSON.parse(d);}catch(x){return;}}
+    if(!d||d.type!=='MEASURE'||!d.details||!d.details.height) return;
+    boxes.forEach(function(b){
+      var f=b.querySelector('iframe'); if(!f||f.contentWindow!==e.source) return;
+      var h=d.details.height, w=b.clientWidth, v=Math.min(Math.round(w*b._ratio),h-54);
+      f.style.height=h+'px'; b.style.height=Math.max(v,120)+'px';
+    });
+  });
   document.addEventListener('click',function(e){
     var wrap=e.target.closest&&e.target.closest('.zs-comm .zs-thumbwrap');
     if(!wrap||wrap.classList.contains('zs-playing')) return;
     var card=wrap.closest('a.zs-card'); if(!card) return;
-    var src=embedUrl(card.getAttribute('href')); if(!src) return;
+    var href=card.getAttribute('href'), id=igId(href), box=document.createElement('div'), f=document.createElement('iframe');
+    if(id){
+      box.className='zs-embedbox zs-ig'; f.src='https://www.instagram.com/reel/'+id+'/embed/'; f.setAttribute('scrolling','no');
+      box._ratio=ratioFor(id); f.style.height='700px';
+    } else if(/facebook\.com\/reel\//.test(href)){
+      box.className='zs-embedbox zs-fb'; f.src='https://www.facebook.com/plugins/video.php?href='+encodeURIComponent(href)+'&show_text=false&autoplay=true&width=480&height=640';
+      f.setAttribute('scrolling','no');
+    } else return;
     e.preventDefault();
     document.querySelectorAll('.zs-comm .zs-thumbwrap.zs-playing').forEach(function(w){ if(w._orig){w.innerHTML=w._orig;w.classList.remove('zs-playing');} });
-    wrap._orig=wrap.innerHTML;
-    wrap.classList.add('zs-playing');
-    wrap.innerHTML='<iframe src="'+src+'" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen loading="eager" title="Video"></iframe>';
+    wrap._orig=wrap.innerHTML; wrap.classList.add('zs-playing');
+    f.setAttribute('allow','autoplay; encrypted-media; picture-in-picture; fullscreen'); f.setAttribute('allowfullscreen',''); f.title='Video';
+    box.appendChild(f); wrap.innerHTML=''; wrap.appendChild(box); boxes.push(box);
+    var w0=box.clientWidth||wrap.clientWidth;
+    if(id){ box.style.height=Math.round(w0*Math.min(box._ratio,box._ratio>1?0.93:box._ratio))+'px'; }
+    else { box.style.height=Math.min(Math.round(window.innerHeight*0.76),640)+'px'; }
   },true);
 })();
 </script>
