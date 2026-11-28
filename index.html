@@ -1241,6 +1241,8 @@ if (location.hash === '#ar') zsTab('ar');
       box.className='zs-embedbox zs-fb'; f.src='https://www.facebook.com/plugins/video.php?href='+encodeURIComponent(href)+'&show_text=false&autoplay=false&width=480&height=640';
       f.setAttribute('scrolling','no');
     } else return false;
+    var th0=wrap.querySelector('img.zs-thumb'); if(th0&&th0.src){ box.style.backgroundImage='url("'+th0.src+'")'; box.style.backgroundSize='cover'; box.style.backgroundPosition='center'; }
+    f.style.background='transparent'; f.style.opacity='0'; f.style.transition='opacity .35s ease'; f.addEventListener('load',function(){ f.style.opacity='1'; });
     wrap._orig=wrap.innerHTML; wrap.classList.add('zs-playing');
     f.setAttribute('allow','autoplay; encrypted-media; picture-in-picture; fullscreen'); f.setAttribute('allowfullscreen',''); f.title='Video';
     box.appendChild(f); wrap.innerHTML=''; wrap.appendChild(box); boxes.push(box);
