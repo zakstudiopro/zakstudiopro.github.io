@@ -1226,26 +1226,33 @@ if (location.hash === '#ar') zsTab('ar');
       f.style.height=h+'px'; b.style.height=Math.max(v,120)+'px';
     });
   });
-  document.addEventListener('click',function(e){
-    var wrap=e.target.closest&&e.target.closest('.zs-comm .zs-thumbwrap');
-    if(!wrap||wrap.classList.contains('zs-playing')) return;
-    var card=wrap.closest('a.zs-card'); if(!card) return;
+  function mount(wrap){
+    if(!wrap||wrap.classList.contains('zs-playing')) return false;
+    var card=wrap.closest('a.zs-card'); if(!card) return false;
     var href=card.getAttribute('href'), id=igId(href), box=document.createElement('div'), f=document.createElement('iframe');
     if(id){
       box.className='zs-embedbox zs-ig'; f.src='https://www.instagram.com/reel/'+id+'/embed/'; f.setAttribute('scrolling','no');
       box._ratio=ratioFor(id); f.style.height='700px';
     } else if(/facebook\.com\/reel\//.test(href)){
-      box.className='zs-embedbox zs-fb'; f.src='https://www.facebook.com/plugins/video.php?href='+encodeURIComponent(href)+'&show_text=false&autoplay=true&width=480&height=640';
+      box.className='zs-embedbox zs-fb'; f.src='https://www.facebook.com/plugins/video.php?href='+encodeURIComponent(href)+'&show_text=false&autoplay=false&width=480&height=640';
       f.setAttribute('scrolling','no');
-    } else return;
-    e.preventDefault();
-    document.querySelectorAll('.zs-comm .zs-thumbwrap.zs-playing').forEach(function(w){ if(w._orig){w.innerHTML=w._orig;w.classList.remove('zs-playing');} });
+    } else return false;
     wrap._orig=wrap.innerHTML; wrap.classList.add('zs-playing');
     f.setAttribute('allow','autoplay; encrypted-media; picture-in-picture; fullscreen'); f.setAttribute('allowfullscreen',''); f.title='Video';
     box.appendChild(f); wrap.innerHTML=''; wrap.appendChild(box); boxes.push(box);
     var w0=box.clientWidth||wrap.clientWidth;
     if(id){ box.style.height=Math.round(w0*Math.min(box._ratio,box._ratio>1?0.93:box._ratio))+'px'; }
     else { box.style.height=Math.min(Math.round(window.innerHeight*0.76),640)+'px'; }
+    return true;
+  }
+  var wraps=[].slice.call(document.querySelectorAll('.zs-comm .zs-thumbwrap'));
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){io.unobserve(en.target);mount(en.target);}});},{rootMargin:'350px 0px'});
+    wraps.forEach(function(w){io.observe(w);});
+  }
+  document.addEventListener('click',function(e){
+    var wrap=e.target.closest&&e.target.closest('.zs-comm .zs-thumbwrap');
+    if(wrap&&!wrap.classList.contains('zs-playing')&&mount(wrap)) e.preventDefault();
   },true);
 })();
 </script>
