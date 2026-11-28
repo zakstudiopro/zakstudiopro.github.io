@@ -1198,5 +1198,35 @@ if (location.hash === '#ar') zsTab('ar');
     .zs-grid.zs-comm .zs-thumbwrap::before { background-size: 50px 50px, auto; }
 }
 </style>
+
+<style>
+/* Inline playback in commercials (Nov 28) */
+.zs-grid.zs-comm .zs-thumbwrap.zs-playing{aspect-ratio:auto;height:min(76vh,680px);background:#000;display:flex;justify-content:center}
+.zs-grid.zs-comm .zs-thumbwrap.zs-playing::before{display:none}
+.zs-grid.zs-comm .zs-thumbwrap.zs-playing iframe{border:0;width:100%;max-width:420px;height:100%;background:#000;display:block}
+.zs-grid.zs-comm .zs-thumbwrap.zs-playing .zs-badge{display:none}
+.zs-grid.zs-comm .zs-thumbwrap:not(.zs-playing){cursor:pointer}
+</style>
+<script>
+(function(){
+  function embedUrl(href){
+    var m=href.match(/instagram\.com\/(?:[^\/]+\/)?reel\/([^\/?#]+)/);
+    if(m) return 'https://www.instagram.com/reel/'+m[1]+'/embed/';
+    if(/facebook\.com\/reel\//.test(href)) return 'https://www.facebook.com/plugins/video.php?href='+encodeURIComponent(href)+'&show_text=false&autoplay=true&width=420';
+    return null;
+  }
+  document.addEventListener('click',function(e){
+    var wrap=e.target.closest&&e.target.closest('.zs-comm .zs-thumbwrap');
+    if(!wrap||wrap.classList.contains('zs-playing')) return;
+    var card=wrap.closest('a.zs-card'); if(!card) return;
+    var src=embedUrl(card.getAttribute('href')); if(!src) return;
+    e.preventDefault();
+    document.querySelectorAll('.zs-comm .zs-thumbwrap.zs-playing').forEach(function(w){ if(w._orig){w.innerHTML=w._orig;w.classList.remove('zs-playing');} });
+    wrap._orig=wrap.innerHTML;
+    wrap.classList.add('zs-playing');
+    wrap.innerHTML='<iframe src="'+src+'" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen loading="eager" title="Video"></iframe>';
+  },true);
+})();
+</script>
 </body>
 </html>
